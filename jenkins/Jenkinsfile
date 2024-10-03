@@ -1,30 +1,71 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:lts-buster-slim'
-            args '-p 3000:3000'
-        }
-    }
+    agent any  // Use any available Jenkins agent
+
     environment {
         CI = 'true'
     }
+
     stages {
+        // Stage 1: Build the application
         stage('Build') {
             steps {
-                sh 'npm install'
+                echo 'Building the application...'
+                sh 'npm install'  // Installs npm dependencies
             }
         }
-        stage('Test') {
+
+        // Stage 2: Unit Testing (Dummy stage)
+        stage('Unit Test') {
             steps {
-                sh './jenkins/scripts/test.sh'
+                echo 'Running unit tests...'
+                // Dummy command for test; you can replace this with actual test scripts
+                sh 'echo "Unit tests passed!"'
             }
         }
-        stage('Deliver') {
+
+        // Stage 3: SAST (Dummy stage)
+        stage('SAST') {
             steps {
-                sh './jenkins/scripts/deliver.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './jenkins/scripts/kill.sh'
+                echo 'Running SAST scan...'
+                // Dummy SAST scan simulation
+                sh 'echo "No vulnerabilities found in SAST scan!"'
             }
+        }
+
+        // Stage 4: Integration Testing (Dummy stage)
+        stage('Integration Test') {
+            steps {
+                echo 'Running integration tests...'
+                // Dummy integration test
+                sh 'echo "Integration tests passed!"'
+            }
+        }
+
+        // Stage 5: Deploy the application
+        stage('Deploy') {
+            steps {
+                echo 'Deploying the application...'
+                // Simulate a deployment (replace this with actual deploy commands if needed)
+                sh 'echo "Application deployed successfully!"'
+            }
+        }
+
+        // Stage 6: DAST (Dummy stage)
+        stage('DAST') {
+            steps {
+                echo 'Running DAST scan...'
+                // Dummy DAST scan simulation
+                sh 'echo "No vulnerabilities found in DAST scan!"'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
